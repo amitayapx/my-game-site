@@ -1,0 +1,239 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gaming Tournament Hub</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+
+  <script>
+    // Check if user is logged in
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      if (!currentUser && window.location.pathname !== '/login.html') {
+        // Not logged in, redirect to login page
+        window.location.href = 'login.html';
+      }
+    });
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="player-info">
+      <span id="player-name">Guest</span>
+      <span id="player-rank-display" class="player-rank-badge badge-bronze">Bronze</span>
+      <span id="player-balance">0</span>
+      <i class="fas fa-coins"></i>
+    </div>
+    <h1>Gaming Tournament Hub</h1>
+    <div class="header-icons">
+      <div class="header-icon" id="logout-btn" title="Logout">
+        <i class="fas fa-sign-out-alt"></i>
+      </div>
+      <div class="store-icon" id="open-store">
+        <i class="fas fa-store"></i>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="leaderboards">
+      <div class="leaderboard" id="fortnite-winners-leaderboard">
+        <h2>Fortnite Cup Winners</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Player</th>
+              <th>Prize</th>
+            </tr>
+          </thead>
+          <tbody id="fortnite-winners-table">
+            <!-- Fortnite winners data will be loaded here -->
+          </tbody>
+        </table>
+        <button class="edit-btn" id="edit-fortnite-winners">Edit</button>
+      </div>
+
+      <div class="leaderboard" id="cod-winners-leaderboard">
+        <h2>COD Tournament Winners</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Player</th>
+              <th>Prize</th>
+            </tr>
+          </thead>
+          <tbody id="cod-winners-table">
+            <!-- COD winners data will be loaded here -->
+          </tbody>
+        </table>
+        <button class="edit-btn" id="edit-cod-winners">Edit</button>
+      </div>
+
+      <div class="leaderboard" id="top-players-leaderboard">
+        <h2>Top Players</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Player</th>
+              <th>Balance</th>
+            </tr>
+          </thead>
+          <tbody id="top-players-table">
+            <!-- Top players data will be loaded here -->
+          </tbody>
+        </table>
+        <button class="edit-btn" id="edit-top-players">Edit</button>
+      </div>
+    </div>
+  <!-- Rank System -->
+    <div class="rank-system">
+      <h2>Player Rank System</h2>
+      <button class="edit-btn" id="edit-rank-system">Edit</button>
+      
+      <div class="current-rank" id="player-current-rank">
+        <div>
+          <h3>Your Current Rank: <span id="current-rank-name">Bronze</span> <span id="rank-badge" class="player-rank-badge badge-bronze">Bronze</span></h3>
+          <p>Tournament Points: <span id="player-points">0</span> / <span id="next-rank-points">500</span></p>
+          <div class="progress-container">
+            <div class="progress-bar" id="rank-progress" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+      
+      <p>The ranking system rewards players based on their performance in tournaments. Players earn 50 points for every tournament victory, and every 500 points unlocks a new rank with additional perks.</p>
+      
+      <div class="rank-tiers">
+        <div class="rank-tier bronze">
+          <h3>Bronze</h3>
+          <p class="points">0 Points</p>
+          <div class="perks">
+            <p>No special perks</p>
+          </div>
+        </div>
+        
+        <div class="rank-tier silver">
+          <h3>Silver</h3>
+          <p class="points">500 Points</p>
+          <div class="perks">
+            <p>Ability to provide input on game rules</p>
+          </div>
+        </div>
+        
+        <div class="rank-tier gold">
+          <h3>Gold</h3>
+          <p class="points">1,000 Points</p>
+          <div class="perks">
+            <p>Input on game and server rules</p>
+          </div>
+        </div>
+        
+        <div class="rank-tier diamond">
+          <h3>Diamond</h3>
+          <p class="points">1,500 Points</p>
+          <div class="perks">
+            <p>All previous privileges</p>
+            <p>Ability to issue temporary bans</p>
+          </div>
+        </div>
+        
+        <div class="rank-tier mythic">
+          <h3>Mythic</h3>
+          <p class="points">2,000 Points</p>
+          <div class="perks">
+            <p>All previous privileges</p>
+            <p>Eligible for prize raffles</p>
+          </div>
+        </div>
+        
+        <div class="rank-tier champion">
+          <h3>Champion</h3>
+          <p class="points">2,500 Points</p>
+          <div class="perks">
+            <p>Highest rank with all benefits</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Digital Store Modal -->
+  <div id="store-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Digital Store</h2>
+      <div id="email-settings-btn" class="admin-button">
+        <i class="fas fa-envelope"></i> Email Settings
+      </div>
+      <div class="store-items">
+        <div class="store-item">
+          <img src="https://via.placeholder.com/150" alt="Cash Reward">
+          <h3>Cash Reward</h3>
+          <p>Exchange 1000 coins for $10 real money</p>
+          <button class="buy-btn" data-price="1000" data-item="cash">Buy for 1000 <i class="fas fa-coins"></i></button>
+        </div>
+        <div class="store-item">
+          <img src="https://via.placeholder.com/150" alt="Premium Rank">
+          <h3>Premium Rank</h3>
+          <p>Get exclusive tournament access</p>
+          <button class="buy-btn" data-price="2000" data-item="rank">Buy for 2000 <i class="fas fa-coins"></i></button>
+        </div>
+        <div class="store-item">
+          <img src="https://via.placeholder.com/150" alt="Gaming Gear">
+          <h3>Gaming Gear</h3>
+          <p>Win a gaming keyboard or mouse</p>
+          <button class="buy-btn" data-price="5000" data-item="gear">Buy for 5000 <i class="fas fa-coins"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Leaderboard Modal -->
+  <div id="edit-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 id="edit-modal-title">Edit Leaderboard</h2>
+      <div id="edit-form-container">
+        <!-- Form will be dynamically inserted here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Email Settings Modal -->
+  <div id="email-settings-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Email Notification Settings</h2>
+      <div class="edit-form">
+        <div class="form-group">
+          <label for="emailjs-public-key">EmailJS Public Key:</label>
+          <input type="text" id="emailjs-public-key" placeholder="Your EmailJS Public Key">
+        </div>
+        <div class="form-group">
+          <label for="emailjs-service-id">EmailJS Service ID:</label>
+          <input type="text" id="emailjs-service-id" placeholder="Your EmailJS Service ID">
+        </div>
+        <div class="form-group">
+          <label for="emailjs-template-id">EmailJS Template ID:</label>
+          <input type="text" id="emailjs-template-id" placeholder="Your EmailJS Template ID">
+        </div>
+        <p class="email-info">
+          Sign up for free at <a href="https://www.emailjs.com/" target="_blank">EmailJS.com</a> to get your keys.
+          Create a template with variables: {{player_name}}, {{item_name}}, {{item_price}}, and {{player_balance}}.
+        </p>
+        <button id="save-email-settings" class="submit-btn">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Gaming Tournament Hub</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1>Gaming Tournament Hub</h1>
+  </header>
+
+  <main class="login-container">
+    <div class="login-forms">
+      <div class="login-section" id="login-section">
+        <h2>Login</h2>
+        <form id="login-form" class="auth-form">
+          <div class="form-group">
+            <label for="login-email">Email:</label>
+            <input type="email" id="login-email" required>
+          </div>
+          <div class="form-group">
+            <label for="login-password">Password:</label>
+            <input type="password" id="login-password" required>
+          </div>
+          <button type="submit" class="submit-btn">Login</button>
+        </form>
+        <p class="switch-form">Don't have an account? <a href="#" id="show-register">Register</a></p>
+      </div>
+
+      <div class="login-section" id="register-section" style="display: none;">
+        <h2>Register</h2>
+        <form id="register-form" class="auth-form">
+          <div class="form-group">
+            <label for="register-username">Username:</label>
+            <input type="text" id="register-username" required>
+          </div>
+          <div class="form-group">
+            <label for="register-email">Email:</label>
+            <input type="email" id="register-email" required>
+          </div>
+          <div class="form-group">
+            <label for="register-password">Password:</label>
+            <input type="password" id="register-password" required>
+          </div>
+          <div class="form-group">
+            <label for="register-confirm-password">Confirm Password:</label>
+            <input type="password" id="register-confirm-password" required>
+          </div>
+          <button type="submit" class="submit-btn">Register</button>
+        </form>
+        <p class="switch-form">Already have an account? <a href="#" id="show-login">Login</a></p>
+      </div>
+    </div>
+  </main>
+
+  <script src="login.js"></script>
+</body>
+</html>
